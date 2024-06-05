@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Sinh Vien</title>
+    <th:block th:replace="layout::link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout::header"></th:block>
+<div class="container mt-4">
+    <h2>Danh sách Sinh Vien</h2>
+    <a class="btn btn-primary" th:href="@{/Sinhvien/add}">Thêm mới</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>MSSV</th>
+            <th>Họ Tên</th>
+            <th>Ngày sinh</th>
+            <th>email</th>
+            <th>Lop</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sv : ${dssv}">
+            <td th:text="${sv.mssv}"></td>
+            <td th:text="${sv.hoTen}"></td>
+            <td th:text="${sv.ngaySinh}"></td>
+            <td th:text="${sv.email}"></td>
+<!--            <td th:text="${sv.lop.MaLop}"></td>-->
+            <td>
+                <a th:href="@{/edit/{mssv}(mssv=${sv.mssv})}">Sửa</a> |
+                <a th:href="@{/delete/{mssv}(mssv=${sv.mssv})}" onclick="return confirm ('Bạn có muốn xoá?')">Xoá</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<th:block th:replace="layout::footer"></th:block>
+</body>
+</html>
+
