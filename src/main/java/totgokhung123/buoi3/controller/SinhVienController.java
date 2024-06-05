@@ -1,8 +1,11 @@
 package totgokhung123.buoi3.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +14,7 @@ import totgokhung123.buoi3.entity.SinhVien;
 import totgokhung123.buoi3.services.LopService;
 import totgokhung123.buoi3.services.MonHocService;
 import totgokhung123.buoi3.services.SinhVienService;
-
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -36,30 +39,38 @@ public class SinhVienController {
         model.addAttribute("monHocs", monHocService.getAllMonHoc());
         return "sinhvien/add";
     }
-
     @PostMapping("/Sinhvien/add")
-    public String addSinhvien(@ModelAttribute("Sinhvien") SinhVien sinhVien) {
+    public String addSinhvien(@Valid SinhVien sinhVien, BindingResult result) {
+        if (result.hasErrors()) {
+            return "sinhvien/add";
+        }
         sinhVienService.addSinhVien(sinhVien);
         return "redirect:/Sinhvien/";
     }
-    @GetMapping("/Sinhvien/edit/{mssv}")
-    public String showEditForm(@PathVariable("mssv") String  mssv, Model model) {
-        SinhVien sv = sinhVienService.getSinhVienById(mssv);
-        model.addAttribute("sinhvien", sv);
+    @GetMapping("/sinhvien/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        SinhVien sinhvien = sinhVienService.getSinhVienById(id);
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid sinhvien Id:" + id));
+        model.addAttribute("sinhvien", sinhvien);
         model.addAttribute("lop", lopService.getAllLop());
-        model.addAttribute("monHocs", monHocService.getAllMonHoc());
         return "sinhvien/edit";
     }
-    @PostMapping("/Sinhvien/edit/{mssv}")
-    public String editSinhvien(@ModelAttribute("sinhvien") SinhVien sv, @PathVariable("mssv") String mssv) {
-        sv.setMssv(mssv); // Cập nhật mã số sinh viên cho sinh viên được chỉnh sửa
-        sinhVienService.updateSinhVien(sv);
+
+    @PostMapping("/sinhvien/edit/{id}")
+    public String editSinhVien(@PathVariable("id") Long id, @Valid SinhVien sinhvien, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "sinhvien/edit";
+        }
+        sinhVienService.updateSinhVien(sinhvien);
+        model.addAttribute("sinhvien", sinhVienService.getAllSinhVien());
         return "redirect:/Sinhvien/";
     }
 
-    @GetMapping("/Sinhvien/delete/{mssv}")
-    public String deleteSinhvien(@PathVariable("mssv") String  mssv) {
-        sinhVienService.deleteSinhVien(mssv);
+    @GetMapping("/sinhvien/delete/{id}")
+    public String deleteSinhVien(@PathVariable("id") Long id, Model model) {
+        SinhVien sinhvien= sinhVienService.getSinhVienById(id);
+        sinhVienService.deleteSinhVien(id);
+        model.addAttribute("sinhvien", sinhVienService.getAllSinhVien());
         return "redirect:/Sinhvien/";
     }
 }

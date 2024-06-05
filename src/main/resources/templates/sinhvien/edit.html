@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cập nhật lớp</title>
+    <title>Chỉnh sửa thông tin sinh viên</title>
     <th:block th:replace="layout::link-css"></th:block>
 </head>
 <body>
 <th:block th:replace="layout::header"></th:block>
-<div class="container">
-    <h1>Cập nhật lớp</h1>
-    <form th:action="@{/edit/{mssv}(mssv=${Sinhvien.mssv})}" th:object="${Sinhvien}" method="post">
+<div class="container mt-4">
+    <h2>Chỉnh sửa thông tin sinh viên</h2>
+    <form th:action="@{/Sinhvien/edit/{id}(id=${sinhvien.mssv})}" th:object="${sinhvien}" method="post" class="needs-validation">
         <div class="col-6 mb-3">
             <label class="form-label" for="mssv">Mã số sinh viên: </label>
             <input class="form-control" type="text" th:field="*{mssv}" id="mssv">
@@ -22,12 +22,12 @@
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="ngaySinh">Ngày sinh: </label>
-            <input class="form-control" type="text" th:field="*{ngaySinh}" id="ngaySinh">
+            <input class="form-control" type="date" th:field="*{ngaySinh}" id="ngaySinh">
             <span th:if="${#fields.hasErrors('ngaySinh')}" th:errors="*{ngaySinh}" class="text-danger"></span>
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="email">Email: </label>
-            <input class="form-control" type="text" th:field="*{email}" id="Email">
+            <input class="form-control" type="text" th:field="*{email}" id="email">
             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
         </div>
         <div class="mb-3">
@@ -39,15 +39,12 @@
         </div>
         <div class="mb-3">
             <label for="monHocs" class="form-label">Môn học:</label>
-            <select th:field="*{monHocs}" multiple class="form-control" id="monHocs">
-                <option th:each="monHoc : ${monHocs}" th:value="${monHoc.maMon}" th:text="${monHoc.tenMon}"></option>
+            <select th:field="*{monHocs}" multiple="multiple" class="form-control" id="monHocs">
+                <option th:each="monHoc : ${monHocs}" th:value="${monHoc.maMon}" th:text="${monHoc.tenMonHoc}"></option>
             </select>
         </div>
-        <!-- Các trường thông tin khác của lớp -->
-        <input type="submit" class="btn btn-primary" value="Cập nhật">
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
     </form>
-    <br>
-    <a th:href="@{/Sinhvien/}">Trở về</a>
 </div>
 <th:block th:replace="layout::footer"></th:block>
 </body>

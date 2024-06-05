@@ -1,41 +1,38 @@
 package totgokhung123.buoi3.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import totgokhung123.buoi3.entity.Lop;
 import totgokhung123.buoi3.entity.SinhVien;
 import totgokhung123.buoi3.repository.ISinhVienRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class SinhVienService {
     @Autowired
     private ISinhVienRepository sinhVienRepository;
+
     public List<SinhVien> getAllSinhVien() {
         return sinhVienRepository.findAll();
     }
 
-    public SinhVien getSinhVienById(String id) {
-//        return sinhVienRepository.findById(Long.valueOf(id)).orElse(null);
-        try {
-            Long sinhVienId = Long.parseLong(id);
-            return sinhVienRepository.findById(sinhVienId).orElse(null);
-        } catch (NumberFormatException e) {
-            // Trong trường hợp chuỗi id không phải là một số hợp lệ
-            return null;
-        }
+    public SinhVien getSinhVienById(Long id) {
+        return sinhVienRepository.findById(id).orElse(null);
     }
 
-    public void addSinhVien(SinhVien sv) {
-        sinhVienRepository.save(sv);
+    public void addSinhVien(SinhVien sinhVien) {
+        sinhVienRepository.save(sinhVien);
     }
 
-    public void deleteSinhVien(String  id) {
-        sinhVienRepository.deleteById(Long.valueOf(id));
+    public void deleteSinhVien(Long id) {
+        sinhVienRepository.deleteById(id);
     }
 
-    public void updateSinhVien(SinhVien sv) {
-        sinhVienRepository.save(sv);
+    public void updateSinhVien(SinhVien sinhVien) {
+        sinhVienRepository.save(sinhVien);
     }
 }

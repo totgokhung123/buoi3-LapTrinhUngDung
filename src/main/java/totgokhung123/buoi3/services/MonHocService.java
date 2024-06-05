@@ -1,13 +1,17 @@
 package totgokhung123.buoi3.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import totgokhung123.buoi3.entity.MonHoc;
 import totgokhung123.buoi3.repository.IMonHocRepository;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class MonHocService {
     @Autowired
     private IMonHocRepository monHocRepository;
@@ -15,7 +19,7 @@ public class MonHocService {
         return monHocRepository.findAll();
     }
 
-    public MonHoc getMonHocById(String  id) {
+    public MonHoc getMonHocById(Long  id) {
         return monHocRepository.findById(id).orElse(null);
     }
 
@@ -23,7 +27,7 @@ public class MonHocService {
         monHocRepository.save(mh);
     }
 
-    public void deleteMonHoc(String  id) {
+    public void deleteMonHoc(Long  id) {
         monHocRepository.deleteById(id);
     }
 

@@ -13,23 +13,18 @@
     <table class="table">
         <thead>
         <tr>
-            <th>MSSV</th>
-            <th>Họ Tên</th>
-            <th>Ngày sinh</th>
-            <th>email</th>
-            <th>Lop</th>
+            <th>Ma so mon hoc</th>
+            <th>Ten mon hoc</th>
+            <th>Chuc nang</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sv : ${dssv}">
-            <td th:text="${sv.mssv}"></td>
-            <td th:text="${sv.hoTen}"></td>
-            <td th:text="${sv.ngaySinh}"></td>
-            <td th:text="${sv.email}"></td>
-<!--            <td th:text="${sv.lop.MaLop}"></td>-->
+        <tr th:each="sv : ${dsmh}">
+            <td th:text="${sv.maMon}"></td>
+            <td th:text="${sv.tenMonHoc}"></td>
             <td>
-                <a th:href="@{/sinhvien/edit/{id}(id=${sv.mssv})}">Sửa</a> |
-                <a th:href="@{/sinhvien/delete/{id}(id=${sv.mssv})}" onclick="return confirm ('Bạn có muốn xoá?')">Xoá</a>
+                <a th:href="@{/Monhoc/edit/{id}(id=${sv.maMon})}">Sửa</a> |
+                <a th:href="@{/Monhoc/delete/{id}(id=${sv.maMon})}" onclick="return confirm ('Bạn có muốn xoá?')">Xoá</a>
             </td>
         </tr>
         </tbody>
