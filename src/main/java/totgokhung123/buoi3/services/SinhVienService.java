@@ -35,4 +35,7 @@ public class SinhVienService {
     public void updateSinhVien(SinhVien sinhVien) {
         sinhVienRepository.save(sinhVien);
     }
+    public List<SinhVien> searchSinhVienByHoTen(String hoTen) {
+        return sinhVienRepository.findByhoTenContainingIgnoreCase(hoTen);
+    }
 }

@@ -34,4 +34,7 @@ public class MonHocService {
     public void updateMonHoc(MonHoc mh) {
         monHocRepository.save(mh);
     }
+    public List<MonHoc> searchMonHocByTenMon(String tenMonHoc) {
+        return monHocRepository.findBytenMonHocContainingIgnoreCase(tenMonHoc);
+    }
 }

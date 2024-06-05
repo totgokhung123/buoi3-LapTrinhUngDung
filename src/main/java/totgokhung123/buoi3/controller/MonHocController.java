@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import totgokhung123.buoi3.entity.MonHoc;
 import totgokhung123.buoi3.services.MonHocService;
 import totgokhung123.buoi3.services.SinhVienService;
@@ -61,5 +62,11 @@ public class MonHocController {
         monHocService.deleteMonHoc(id);
         model.addAttribute("monhoc", monHocService.getAllMonHoc());
         return "redirect:/Monhoc/";
+    }
+    @GetMapping("/MonHoc/search")
+    public String searchMonHoc(@RequestParam("keyword") String keyword, Model model) {
+        List<MonHoc> dsMonHoc = monHocService.searchMonHocByTenMon(keyword);
+        model.addAttribute("dsMonHoc", dsMonHoc);
+        return "monhoc/list";
     }
 }

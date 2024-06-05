@@ -73,4 +73,10 @@ public class SinhVienController {
         model.addAttribute("sinhvien", sinhVienService.getAllSinhVien());
         return "redirect:/Sinhvien/";
     }
+    @GetMapping("/Sinhvien/search")
+    public String searchSinhVien(@RequestParam("keyword") String keyword, Model model) {
+        List<SinhVien> dsSinhvien = sinhVienService.searchSinhVienByHoTen(keyword);
+        model.addAttribute("dssv", dsSinhvien);
+        return "sinhvien/list";
+    }
 }

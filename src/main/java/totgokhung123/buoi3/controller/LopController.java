@@ -52,5 +52,10 @@ public class LopController {
         lopService.deleteLop(maLop);
         return "redirect:/";
     }
-
+    @GetMapping("/Lop/search")
+    public String searchLop(@RequestParam("keyword") String keyword, Model model) {
+        List<Lop> dsLop = lopService.searchLopByTenLop(keyword);
+        model.addAttribute("dsLop", dsLop);
+        return "lop/list";
+    }
 }

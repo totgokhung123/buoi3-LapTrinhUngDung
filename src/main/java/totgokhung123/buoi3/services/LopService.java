@@ -31,4 +31,7 @@ public class LopService {
     public void updateLop(Lop lop) {
         lopRepository.save(lop);
     }
+    public List<Lop> searchLopByTenLop(String tenLop) {
+        return lopRepository.findBytenLopContainingIgnoreCase(tenLop);
+    }
 }
